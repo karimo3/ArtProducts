@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,11 +17,12 @@
         </ul>
     </menu>
     <section>
-    <h2>@ViewBag.Title</h2>
+        <h2>@ViewBag.Title</h2>
         @RenderBody()
     </section>
     <footer>Copyright 2017 Dutch Treat LLC</footer>
     <script src="~/lib/jQuery/dist/jquery.js"></script>
     <script src="~/js/index.js"></script>
+    @RenderSection("scripts", false) <!--'false' means it is not required -->
 </body>
 </html>

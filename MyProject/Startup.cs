@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using MyProject.Services;
 
 namespace MyProject
 {
@@ -16,6 +17,8 @@ namespace MyProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(); // this is called Dependency Injection. it is neccessary for the project to run properly
+            services.AddTransient<IMailService, NullMailService>();
+            //Eventually will need Support for real mail service 
 
         }
 
