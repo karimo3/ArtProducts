@@ -18,8 +18,19 @@ namespace MyProject
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args) //sets up a default configuration file that we can use
+                .ConfigureAppConfiguration(SetupConfiguration) //manually set up configuration file --> defined below
                 .UseStartup<Startup>()
                 .Build();
+
+        private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
+        {
+            //remove the default configuration options
+            builder.Sources.Clear();
+
+            builder.AddJsonFile("config.json", false, true)
+                   .AddEnvironmentVariables();
+
+        }
     }
 }

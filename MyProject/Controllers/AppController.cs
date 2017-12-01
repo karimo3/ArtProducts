@@ -39,7 +39,7 @@ namespace MyProject.Controllers
             {
                 _mailService.SendMessage("kokarim@msn.com", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
                 ViewBag.UserMessage = "Mail Sent";
-                ModelState.Clear();
+               // ModelState.Clear();
             }
             else
             {
