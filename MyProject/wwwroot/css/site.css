@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
     font-family: 'Segoe UI', Tahoma, Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -24,8 +24,6 @@ label {
     background-color: green;
     color: white;
 }
-/*classes area applied to more than one element on a page;*/ 
-/*id's are applied to one specific element at a time*/
 
 ul.product-props {
     font-size: small;
@@ -84,4 +82,4 @@ menu li {
 
     menu li:last-of-type::after{
            content: "";
-    }
+    }*/

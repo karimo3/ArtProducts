@@ -1,10 +1,5 @@
 ﻿$(document).ready(function () {
 
-    //var a = "Hello JavaScript!";
-    //alert(a);
-
-    //var theForm = $("#theForm");
-    //theForm.hide();
 
     var button = $("#buyButton");
     button.on("click", function () {
