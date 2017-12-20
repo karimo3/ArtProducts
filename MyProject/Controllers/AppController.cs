@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyProject.ViewModels;
 using MyProject.Services;
+using MyProject.Data;
 
 namespace MyProject.Controllers
 {
@@ -12,10 +13,12 @@ namespace MyProject.Controllers
     {
 
         private readonly IMailService _mailService;
+        public readonly IDutchRepository _repository;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, IDutchRepository repository)
         {
             _mailService = mailService;
+            _repository = repository;
         }
 
 
@@ -28,7 +31,6 @@ namespace MyProject.Controllers
         [HttpGet("contact")]
         public IActionResult Contact()
         {
-            
             return View();
         }
 
@@ -39,7 +41,7 @@ namespace MyProject.Controllers
             {
                 _mailService.SendMessage("kokarim@msn.com", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
                 ViewBag.UserMessage = "Mail Sent";
-               // ModelState.Clear();
+                ModelState.Clear();
             }
             else
             {
@@ -55,8 +57,14 @@ namespace MyProject.Controllers
             return View();
         }
 
+        public IActionResult Shop()
+        {
+            //fluent syntax
+            var results = _repository.GetAllProducts();
+                
 
-
+            return View(results);
+        }
 
 
 

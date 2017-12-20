@@ -8,9 +8,9 @@ namespace MyProject.ViewModels
 {
     public class ContactViewModel
     {
-
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         [Required]
-        [MinLength(5)]
+        [MinLength(5, ErrorMessage = "Name must be at least 5 characters")]
         public string Name { get; set; }
         [Required]
         [EmailAddress]

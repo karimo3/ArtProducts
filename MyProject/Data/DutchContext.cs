@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using DutchTreat.Data.Entities;
+using MyProject.Data.Entities;
 
 namespace MyProject.Data
 {
@@ -15,6 +15,5 @@ namespace MyProject.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
-        
     }
 }

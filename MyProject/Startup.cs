@@ -26,16 +26,22 @@ namespace MyProject
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(); // this is called Dependency Injection. it is neccessary for the project to run properly
+            services.AddMvc(); // this is called Dependency Injection. It is neccessary for the project to run properly
+
+
             services.AddTransient<IMailService, NullMailService>();
             //Eventually will need Support for real mail service 
+
+            services.AddTransient<DutchSeeder>(); //AddTransient are created as needed
+
+            services.AddScoped<IDutchRepository, DutchRepository>(); //scoped bc we want the repository to be shared within one scope...interface first; add IDutchRepository as a service, and DutchRepository as the implementation
 
             services.AddDbContext<DutchContext>( cfg =>
                 {
                     cfg.UseSqlServer(_config.GetConnectionString("DutchConnectionString")); //connection string defined in config.json
                 }
-            
             ); //database context
+
 
         }
 
@@ -56,11 +62,21 @@ namespace MyProject
             app.UseMvc( routes =>
             {
                 routes.MapRoute(
-                    "Default", 
-                    "{controller}/{action}/{id}", 
+                   "Default", 
+                    "{controller}/{action}/{id}",
                     new { controller = "App", action = "Index", id = "" }
                 );
             });
+
+            if (env.IsDevelopment())
+            {
+                //seed the Database
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
+                    seeder.Seed();
+                }
+            }
                                   
         }
     }
