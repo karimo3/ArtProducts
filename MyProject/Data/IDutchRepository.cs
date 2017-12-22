@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using MyProject.Data.Entities;
 
 namespace MyProject.Data
@@ -8,6 +9,14 @@ namespace MyProject.Data
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByCategory(string category);
 
-        bool SaveChanges();
+        IEnumerable<Order> GetAllOrders();
+
+        Order GetOrderById(int id);
+
+        bool SaveAll();
+
+        void AddEntity(object model);
+
+        
     }
 }
