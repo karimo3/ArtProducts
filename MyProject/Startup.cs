@@ -41,6 +41,7 @@ namespace MyProject
             })
               .AddEntityFrameworkStores<DutchContext>();
 
+            //Authentication
             services.AddAuthentication()
                 .AddCookie()
                 .AddJwtBearer();
