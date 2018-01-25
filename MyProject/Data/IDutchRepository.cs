@@ -9,14 +9,13 @@ namespace MyProject.Data
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByCategory(string category);
 
-        IEnumerable<Order> GetAllOrders();
+        IEnumerable<Orders> GetAllOrders(bool includeItems);
 
-        Order GetOrderById(int id);
+        Orders GetOrderById(int id);
 
         bool SaveAll();
 
         void AddEntity(object model);
 
-        
     }
 }

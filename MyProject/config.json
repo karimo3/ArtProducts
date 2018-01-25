@@ -1,6 +1,6 @@
 ﻿{
   "ConnectionStrings": {
-    "DutchConnectionString": "server=(localdb)\\ProjectsV13;Database=DutchTreatDb;Integrated Security=true;MultipleActiveResultSets=true"
+    "DutchConnectionString": "server=192.168.56.2;Database=DutchTreatDb;Integrated Security=false;MultipleActiveResultSets=true;UID=sa;PWD=SaturnO#2669;"
   },
 
   "Logging": {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyProject.ViewModels;
 using MyProject.Services;
 using MyProject.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyProject.Controllers
 {
@@ -21,10 +22,9 @@ namespace MyProject.Controllers
             _repository = repository;
         }
 
-
+     
         public IActionResult Index()
         {
-           
             return View();
         }
 
@@ -57,6 +57,7 @@ namespace MyProject.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Shop()
         {
             //fluent syntax
@@ -66,6 +67,7 @@ namespace MyProject.Controllers
             return View(results);
         }
 
+        
 
 
     }//AppController

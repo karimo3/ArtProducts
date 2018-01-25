@@ -12,8 +12,11 @@ namespace MyProject.Data
     {
         public DutchMappingProfile()
         {
-            CreateMap<Order, OrderViewModel>()
+            CreateMap<Orders, OrderViewModel>()
                 .ForMember(o => o.OrderId, ex => ex.MapFrom(o => o.Id));
+
+            CreateMap<OrderItems, OrderItemViewModel>()
+                .ReverseMap();
         } 
     }
 }

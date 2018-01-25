@@ -27,28 +27,29 @@ namespace MyProject.Controllers
 
         public IMapper Mapper { get; }
 
-        public IActionResult Get()
+        public IActionResult Get(bool includeItems=true)
         {
             try
             {
-                return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(_repository.GetAllOrders()));
+                var results = _repository.GetAllOrders(includeItems);
+                return Ok(_mapper.Map<IEnumerable<Orders>, IEnumerable<OrderViewModel>>(results));
             }
             catch (Exception ex)
             {
 
-                _logger.LogError($"Failed to get orders: {ex}");
-                return BadRequest("Failed to get orders");
+                _logger.LogError($"Failed to get orders: {ex}"); //the $("string") is a new feature in C# 6.0 called Interpolated Strings 
+                return BadRequest($"Failed to get orders");
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}")] // just adding an argument to the URL that is specified above in the controller decalration
         public IActionResult Get(int id)
         {
             try
             {
                 var order = _repository.GetOrderById(id);
-
-                if (order != null) return Ok(_mapper.Map<Order, OrderViewModel>(order));
+                
+                if (order != null) return Ok(_mapper.Map<Orders, OrderViewModel>(order));
                 return Ok();
             }
             catch (Exception ex)
@@ -67,7 +68,7 @@ namespace MyProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var newOrder = _mapper.Map<OrderViewModel, Order>(model);
+                    var newOrder = _mapper.Map<OrderViewModel, Orders>(model);
 
                     if (newOrder.OrderDate == DateTime.MinValue)
                     {
@@ -80,7 +81,7 @@ namespace MyProject.Controllers
 
                         //Created method is a 201, rather than Ok() which is 200
                         //if you created a new object you need to return "Created", which specifies where it is on the API and pass back the data 
-                        return Created($"/api/orders/{newOrder.Id}", _mapper.Map<Order, OrderViewModel>(newOrder));
+                        return Created($"/api/orders/{newOrder.Id}", _mapper.Map<Orders, OrderViewModel>(newOrder));
                     }
                 }
                 else

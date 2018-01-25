@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MyProject.Controllers
 {
 
-    [Route("api/[Controller]")]
+    [Route("api/[Controller]")] //attributed route 
     public class ProductsController : Controller
     {
         private readonly IDutchRepository _repository;
@@ -23,7 +23,7 @@ namespace MyProject.Controllers
             _logger = logger;
         }
         
-        [HttpGet]
+        [HttpGet] //Http Get attribute 
         public IActionResult Get()
         {
             try
