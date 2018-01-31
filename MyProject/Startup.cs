@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,24 +12,62 @@ using MyProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
+using Newtonsoft.Json;
+using MyProject.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 
 namespace MyProject
 {
     public class Startup
     {
         private readonly IConfiguration _config;
+        private readonly IHostingEnvironment _env;
 
-        public Startup(IConfiguration config)
+        public Startup(IConfiguration config, IHostingEnvironment env)
         {
             _config = config;
+            _env = env;
         }
+
+        //public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //configuration for the Identity
+            services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+
+            })
+              .AddEntityFrameworkStores<DutchContext>();
+            
+            
+            //Authentication...Look at code added in AccountController.CreateToken method
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = _config["Tokens:Issuer"],
+                        ValidAudience = _config["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+                    };
+                });
+
+            services.AddMvc(opt =>
+            {
+                if (_env.IsProduction())
+                {
+                    opt.Filters.Add(new RequireHttpsAttribute()); //the whole site will require HTTPS only in production
+                }                                                 //this is how to enable HTTPS
+            })
+                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             // this is called Dependency Injection. It is neccessary for the project to run properly
 
 
@@ -53,6 +92,9 @@ namespace MyProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            
+
             if (env.IsDevelopment()) //there is IsDevelopment, IsStaging, IsProduction
             {
                 app.UseDeveloperExceptionPage();
@@ -62,8 +104,12 @@ namespace MyProject
                 app.UseExceptionHandler("/error");
             }
 
+            //app.UseSession(); //this adds session state to the application
             //app.UseDefaultFiles(); get rid of this
             app.UseStaticFiles(); //only serves files in wwwroot directory
+
+            app.UseAuthentication(); //assumption is to use Cookie based authentication 
+
             app.UseMvc( routes =>
             {
                 routes.MapRoute(
@@ -79,7 +125,7 @@ namespace MyProject
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-                    seeder.Seed();
+                    seeder.Seed().Wait(); //Wait makes it Synchronous...it only happens once when the App starts up, so its okay to wait for it
                 }
             }
                                   

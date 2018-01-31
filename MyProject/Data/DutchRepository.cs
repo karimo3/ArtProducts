@@ -4,7 +4,6 @@ using MyProject.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyProject.Data
 {
@@ -24,12 +23,38 @@ namespace MyProject.Data
             _ctx.Add(model);
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public IEnumerable<Orders> GetAllOrders(bool includeItems)
         {
-            return _ctx.Orders
-                    .Include(o => o.Items)
-                    .ThenInclude(i => i.Product)
+            if (includeItems)
+            {
+                return _ctx.Orders
+                     .Include(o => o.Items)
+                     .ThenInclude(i => i.Product)
+                     .ToList();
+            }
+            else
+            {
+                return _ctx.Orders
                     .ToList();
+            }
+        }
+
+        public IEnumerable<Orders> GetAllOrdersByUser(string username, bool includeItems)
+        {
+
+            if (includeItems)
+            {
+                return _ctx.Orders
+                     .Where(o => o.User.UserName == username)
+                     .Include(o => o.Items)
+                     .ThenInclude(i => i.Product)
+                     .ToList();
+            }
+            else
+            {
+                return _ctx.Orders
+                    .ToList();
+            }
         }
 
         //get a list of all the products
@@ -49,12 +74,12 @@ namespace MyProject.Data
             }
         }
 
-        public Order GetOrderById(int id)
+        public Orders GetOrderById(string username, int id)
         {
             return _ctx.Orders
                         .Include(o => o.Items)
                         .ThenInclude(i => i.Product)
-                        .Where(o => o.Id == id)
+                        .Where(o => o.Id == id && o.User.UserName == username)
                         .FirstOrDefault();
         }
 

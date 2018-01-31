@@ -11,9 +11,10 @@ using System;
 namespace MyProject.Migrations
 {
     [DbContext(typeof(DutchContext))]
-    partial class DutchContextModelSnapshot : ModelSnapshot
+    [Migration("20180122204557_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +129,25 @@ namespace MyProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyProject.Data.Entities.OrderItems", b =>
+            modelBuilder.Entity("MyProject.Data.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("OrderDate");
+
+                    b.Property<string>("OrderNumber");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("MyProject.Data.Entities.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -147,25 +166,7 @@ namespace MyProject.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("MyProject.Data.Entities.Orders", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("OrderDate");
-
-                    b.Property<string>("OrderNumber");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("MyProject.Data.Entities.Product", b =>
@@ -300,22 +301,22 @@ namespace MyProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MyProject.Data.Entities.OrderItems", b =>
+            modelBuilder.Entity("MyProject.Data.Entities.Order", b =>
                 {
-                    b.HasOne("MyProject.Data.Entities.Orders", "Order")
+                    b.HasOne("MyProject.Data.Entities.StoreUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MyProject.Data.Entities.OrderItem", b =>
+                {
+                    b.HasOne("MyProject.Data.Entities.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("MyProject.Data.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("MyProject.Data.Entities.Orders", b =>
-                {
-                    b.HasOne("MyProject.Data.Entities.StoreUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

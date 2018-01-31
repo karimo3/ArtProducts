@@ -1,6 +1,6 @@
 ﻿{
   "ConnectionStrings": {
-    "DutchConnectionString": "server=(localdb)\\ProjectsV13;Database=DutchTreatDb;Integrated Security=true;MultipleActiveResultSets=true"
+    "DutchConnectionString": "server=WIN-U41K44FURK6;Database=DutchTreatDb;Integrated Security=false;MultipleActiveResultSets=true;UID=sa;PWD=SaturnO#2669;"
   },
 
   "Logging": {
@@ -10,5 +10,11 @@
       "System": "Information"
     }
 
+  },
+
+  "Tokens": {
+    "Key": "kidjakdiejeidjkl",
+    "Issuer": "localhost",
+    "Audience": ""
   }
 }
