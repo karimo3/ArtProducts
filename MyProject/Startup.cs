@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ using Newtonsoft.Json;
 using MyProject.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 
 namespace MyProject
 {
@@ -29,6 +32,8 @@ namespace MyProject
             _env = env;
         }
 
+        //public IConfigurationRoot Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -40,11 +45,20 @@ namespace MyProject
 
             })
               .AddEntityFrameworkStores<DutchContext>();
-
-            //Authentication
+            
+            
+            //Authentication...Look at code added in AccountController.CreateToken method
             services.AddAuthentication()
                 .AddCookie()
-                .AddJwtBearer();
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = _config["Tokens:Issuer"],
+                        ValidAudience = _config["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+                    };
+                });
 
             services.AddMvc(opt =>
             {
@@ -78,6 +92,9 @@ namespace MyProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            
+
             if (env.IsDevelopment()) //there is IsDevelopment, IsStaging, IsProduction
             {
                 app.UseDeveloperExceptionPage();
@@ -87,6 +104,7 @@ namespace MyProject
                 app.UseExceptionHandler("/error");
             }
 
+            //app.UseSession(); //this adds session state to the application
             //app.UseDefaultFiles(); get rid of this
             app.UseStaticFiles(); //only serves files in wwwroot directory
 
