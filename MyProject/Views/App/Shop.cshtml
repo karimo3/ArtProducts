@@ -1,12 +1,15 @@
-﻿@model IEnumerable<Product>  
+﻿@model IEnumerable<Product>
+@section Scripts{
 
+    <script src="~/ts/main.js"></script>
+    }
 <h1>Shop</h1>
 <p>Count: @Model.Count()</p>
 @foreach (var p in Model)
 {
     <div class="col-md-3">
-        <div class= "well well-sm">
-            <img src="~/img/@(p.ArtId).jpg" class="img-responsive" alt="@p.Title"/>
+        <div class="well well-sm">
+            <img src="~/img/@(p.ArtId).jpg" class="img-responsive" alt="@p.Title" />
             <h3>@p.Category - @p.Size</h3>
             <ul class="product-props">
                 <li>Price: @p.Price</li>
