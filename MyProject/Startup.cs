@@ -113,9 +113,9 @@ namespace MyProject
             app.UseMvc( routes =>
             {
                 routes.MapRoute(
-                   "Default", 
-                    "{controller}/{action}/{id}",
-                    new { controller = "App", action = "Index", id = "" }
+                  name: "Default", 
+                  template: "{controller=App}/{action=Index}/{id?}"
+                   // new { controller = "App", action = "Index", id = "" } //this can be used if not specified in "template"
                 );
             });
 

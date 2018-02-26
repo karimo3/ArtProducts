@@ -60,11 +60,8 @@ namespace MyProject.Controllers
         [Authorize]
         public IActionResult Shop()
         {
-            //fluent syntax
-            var results = _repository.GetAllProducts();
-                
-
-            return View(results);
+            
+            return View();
         }
 
         
