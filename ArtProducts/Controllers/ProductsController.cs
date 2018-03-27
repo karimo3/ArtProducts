@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ArtProducts.Data;
-using ArtProducts.Data.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArtProducts.Controllers
 {
@@ -38,5 +34,6 @@ namespace ArtProducts.Controllers
             }
             
         }
+
     }
 }

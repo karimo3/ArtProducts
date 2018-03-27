@@ -1,11 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ArtProducts.Services;
 using ArtProducts.Data;
@@ -17,7 +12,6 @@ using ArtProducts.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Logging;
 
 namespace ArtProducts
 {
@@ -84,16 +78,12 @@ namespace ArtProducts
                 }
             ); //database context
 
-
             services.AddAutoMapper();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
-            
 
             if (env.IsDevelopment()) //there is IsDevelopment, IsStaging, IsProduction
             {
@@ -105,7 +95,8 @@ namespace ArtProducts
             }
 
             //app.UseSession(); //this adds session state to the application
-            //app.UseDefaultFiles(); get rid of this
+            //app.UseDefaultFiles(); get rid of this... 
+            //app.UseFileServer(); 
             app.UseStaticFiles(); //only serves files in wwwroot directory
 
             app.UseAuthentication(); //assumption is to use Cookie based authentication 

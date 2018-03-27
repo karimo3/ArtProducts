@@ -1,12 +1,12 @@
 {
-  "compileOnSave": false,
+  "compileOnSave": true,
   "include": [
     "./ClientApp",
     ".wwwroot/ts"
   ],
   "compilerOptions": {
     "outDir": "wwwroot/clientapp/out-tsc",
-    "sourceMap": true,
+    "sourceMap": true, //create map files for debugging
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

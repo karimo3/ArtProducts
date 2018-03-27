@@ -5,7 +5,7 @@
       
     }
 
-    public visits: number = 0;  //use the colon to declare the type of the variable...type safety is only validated at runtime, not at compile time
+    public visits: number = 0;  //use the colon to declare the data type of the variable...type safety is only validated at runtime, not at compile time
     public ourName: string;
 
     public showName() {

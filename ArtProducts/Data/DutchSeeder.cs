@@ -25,7 +25,7 @@ namespace ArtProducts.Data
 
         public async Task Seed()
         {
-            _ctx.Database.EnsureCreated(); //make sure the database actually exist/created... only creates database if it doesnt exist
+           _ctx.Database.EnsureCreated(); //make sure the database actually exist/created... only creates database if it doesnt exist
 
             var user = await _userManager.FindByEmailAsync("kokarim@msn.com");
             if (user == null)
