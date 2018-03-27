@@ -1,85 +1,44 @@
-﻿/*body {
-    font-family: 'Segoe UI', Tahoma, Verdana, Geneva, Tahoma, sans-serif;
+﻿@import url("https://bootswatch.com/flatly/bootstrap.min.css");
+
+body {
+    padding-top: 50px;
 }
 
-input, textarea{
-    font-size: 18px;
-    width: 200px;
+footer {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-input[type=submit] {
-    width: auto;
-}
-
-label {
-    font-size: 16px;
-}
-
-#theForm{
-    background-color: #c4bfbf;
-}
-
-#theForm input[type=submit]{
-
-    background-color: green;
-    color: white;
-}
-
-ul.product-props {
-    font-size: small;
-} 
-
-ul.product-props {
-    list-style-type: none;
-}
-
-.product-info {
-    border: 1px solid grey;
-    display: inline-block;
-    padding: 8px 2px;
-    margin: 2px;
-    width: 450px;
-    background-color: lightgray;
-    border-radius: 5px;
-}
-
-.product-info img {
-    margin: 3px;
-    float: left;
-    border: 1px solid black;
-    max-width: 150px;
-}
-
-#loginToggle{
-    cursor: pointer;
-}
-
-.popup-form{
-    padding:5px;
-    border:2px black inset;
-    display: inline-block;
-}
-    .popup-form input {
-        width:200px;
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 768px) {
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        background: #ecf0f1;
     }
 
-    .popup-form label {
-        width:150px;
-        display:inline-block;
+    .row-offcanvas-left .sidebar-offcanvas {
+        left: -40%;
     }
 
-    .popup-form input[type=checkbox], .popup-form input[type=submit]{
-         width:auto;
+    .row-offcanvas-left.active {
+        left: 40%;
     }
 
-menu li {
-    display: inline;
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+        width: 40%;
+        margin-left: 12px;
+    }
 }
 
-    menu li::after {
-        content: ' |';
-    }
-
-    menu li:last-of-type::after{
-           content: "";
-    }*/
+#sidebar {
+    padding: 15px;
+    margin-top: 10px;
+}
