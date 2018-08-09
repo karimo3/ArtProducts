@@ -51,7 +51,7 @@ namespace ArtProducts.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (Request.Query.Keys.Contains("ReturnURl"))
+                    if (Request.Query.Keys.Contains("ReturnUrl"))
                     {
                         Redirect(Request.Query["ReturnUrl"].First()); //First() gets first value of the Url
                     }
