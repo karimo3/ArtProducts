@@ -116,7 +116,7 @@ namespace ArtProducts
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-                    seeder.Seed().Wait(); //Wait makes it Synchronous...it only happens once when the App starts up, so its okay to wait for it
+                    //seeder.Seed().Wait(); //Wait makes it Synchronous...it only happens once when the App starts up, so its okay to wait for it
                 }
             }
                                   
